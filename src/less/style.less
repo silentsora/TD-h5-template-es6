@@ -39,6 +39,31 @@ html, body {
     }
 }
 
+.simple-msg {
+    // display: none;
+    width: auto;
+    padding: 5Px 10Px;
+    border-radius: 5Px;
+    background-color: rgba(0, 0, 0, 0.8);
+    font-size: 0.26rem;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 3.2rem;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.6s;
+    white-space: nowrap;
+    vertical-align: middle;
+
+    &.white {
+        background-color: #fff;
+        color: #000;
+    }
+}
+
 // 横竖屏布局相关，慎删；
 .m-vertical {
     // display: none;
