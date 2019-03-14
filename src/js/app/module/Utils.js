@@ -1,8 +1,8 @@
 // import Config from './Config.js';
 
-const Utility = {};
+const Utils = {};
 
-Utility.fadeIn = (ele, delay) => {
+Utils.fadeIn = (ele, delay) => {
     if (typeof delay !== 'number') {
         delay = 600;
     }
@@ -10,39 +10,43 @@ Utility.fadeIn = (ele, delay) => {
     ele.style.display = 'block';
     ele.style.transitionProperty = 'opacity';
     ele.style.webkitTransitionProperty = 'opacity';
-    ele.style.animationDuration = delay.toString();
-    ele.style.webkitAnimationDuration = delay.toString();
-    ele.style.opacity = '1';
+    ele.style.transitionDuration = (delay / 1000) + 's';
+    ele.style.webkitTransitionDuration = (delay / 1000) + 's';
+
+    setTimeout(() => {
+        ele.style.opacity = '1';
+    }, 100);
 
     setTimeout(() => {
         ele.style.transitionProperty = 'initial';
         ele.style.webkitTransitionProperty = 'initial';
-        ele.style.animationDuration = 'initial';
-        ele.style.webkitAnimationDuration = 'initial';
-    }, delay);
+        ele.style.transitionDuration = 'initial';
+        ele.style.webkitTransitionDuration = 'initial';
+    }, delay + 200);
 };
 
-Utility.fadeOut = (ele, delay) => {
+Utils.fadeOut = (ele, delay) => {
     if (typeof delay !== 'number') {
         delay = 600;
     }
-    ele.style.display = 'block';
     ele.style.transitionProperty = 'opacity';
     ele.style.webkitTransitionProperty = 'opacity';
-    ele.style.animationDuration = delay.toString();
-    ele.style.webkitAnimationDuration = delay.toString();
-    ele.style.opacity = '0';
+    ele.style.transitionDuration = (delay / 1000) + 's';
+    ele.style.webkitTransitionDuration = (delay / 1000) + 's';
+    setTimeout(() => {
+        ele.style.opacity = '0';
+    }, 100);
 
     setTimeout(() => {
         ele.style.display = 'none';
         ele.style.transitionProperty = 'initial';
         ele.style.webkitTransitionProperty = 'initial';
-        ele.style.animationDuration = 'initial';
-        ele.style.webkitAnimationDuration = 'initial';
-    }, delay);
+        ele.style.transitionDuration = 'initial';
+        ele.style.webkitTransitionDuration = 'initial';
+    }, delay + 200);
 };
 
-Utility.checkWord = (text, list) => {
+Utils.checkWord = (text, list) => {
     for (let i = 0; i < list.length; i++) {
         if (text === list[i]) {
             return true;
@@ -51,7 +55,7 @@ Utility.checkWord = (text, list) => {
     return false;
 };
 
-Utility.initWebaudio = (url, autoplay) => {
+Utils.initWebaudio = (url, autoplay) => {
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
     let source = audioCtx.createBufferSource();
@@ -101,13 +105,13 @@ Utility.initWebaudio = (url, autoplay) => {
     return request.send();
 };
 
-Utility.showSimpleMessage = (text) => {
+Utils.showSimpleMessage = (text) => {
     let msg = document.querySelector('.simple-msg');
     msg.innerHTML = text;
     msg.style.opacity = '1';
 };
 
-Utility.hideSimpleMessage = (callback) => {
+Utils.hideSimpleMessage = (callback) => {
     let msg = document.querySelector('.simple-msg');
     msg.style.opacity = '0';
     setTimeout(() => {
@@ -115,7 +119,7 @@ Utility.hideSimpleMessage = (callback) => {
     }, 600);
 };
 
-Utility.showHideSimpleMessage = (text, callback) => {
+Utils.showHideSimpleMessage = (text, callback) => {
     let msg = document.querySelector('.simple-msg');
     msg.innerHTML = text;
     msg.style.opacity = '1';
@@ -129,7 +133,7 @@ Utility.showHideSimpleMessage = (text, callback) => {
     }, 2600);
 };
 
-Utility.buildQrcode = (url) => {
+Utils.buildQrcode = (url) => {
     const $qrcode = document.createElement('div');
     const qrcode = new QRCode($qrcode, {
         text: url,
@@ -152,7 +156,7 @@ Utility.buildQrcode = (url) => {
     return $qrcode.lastChild;
 };
 
-Utility.buildCanvas = (imgList) => {
+Utils.buildCanvas = (imgList) => {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     const imgCanvas = new Image();
@@ -172,4 +176,4 @@ Utility.buildCanvas = (imgList) => {
     }, 100);
 };
 
-export default Utility;
+export default Utils;

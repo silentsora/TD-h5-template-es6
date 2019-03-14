@@ -1,4 +1,4 @@
-import Utility from './module/Utility.js';
+import Utils from './module/Utils.js';
 // import Config from './Config.js';
 // import TD from './module/TD.js';
 
@@ -13,11 +13,11 @@ export default class End {
     }
 
     show () {
-        Utility.fadeIn(this.$page);
+        Utils.fadeIn(this.$page);
     }
 
     hide () {
-        Utility.fadeOut(this.$page);
+        Utils.fadeOut(this.$page);
     }
 
     init () {

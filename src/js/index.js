@@ -18,31 +18,29 @@ class Index {
         this.endCtrl = new End();
     }
 
-    phaseLoad () {
+    async phaseLoad () {
         this.loadingCtrl.init();
-        this.loadingCtrl.preload()
-            .then(this.loadingCtrl.mainLoad.bind(this.loadingCtrl))
-            .then(this.loadingCtrl.promiseOnload.bind(this.loadingCtrl))
-            .then(this.phaseVideo.bind(this));
+        await this.loadingCtrl.preload();
+        await this.loadingCtrl.mainLoad();
+        await this.loadingCtrl.promiseOnload();
+        this.phaseVideo();
     }
 
-    phaseVideo () {
+    async phaseVideo () {
         this.videoCtrl.init();
-        this.videoCtrl.playVideo()
-            .then(() => {
-                this.videoCtrl.show();
-                this.loadingCtrl.hide();
-            });
-        this.videoCtrl.promiseVideoEnd()
-            .then(this.phaseEnd.bind(this));
+        await this.videoCtrl.playVideo();
+        this.videoCtrl.show();
+        this.loadingCtrl.hide();
+        await this.videoCtrl.promiseVideoEnd();
+        this.phaseEnd();
     }
 
-    phaseEnd () {
+    async phaseEnd () {
         this.endCtrl.init();
         this.endCtrl.show();
         this.videoCtrl.hide();
-        this.endCtrl.promiseRetry()
-            .then(this.phaseVideo.bind(this));
+        await this.endCtrl.promiseRetry();
+        this.phaseVideo();
     }
 }
 
