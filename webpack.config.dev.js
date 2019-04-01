@@ -20,7 +20,7 @@ module.exports = function (env) {
     return webpackMerge(commonConfig(), {
         output: {
             path: path.resolve(__dirname, './dist'),
-            filename: 'js/[name].[hash:8].js',
+            filename: 'js/[name].js',
             publicPath: config.dev
         },
         module: {
@@ -50,19 +50,50 @@ module.exports = function (env) {
                     ]
                 },
                 {
+                    test: /\.(png|jpg|gif|svg|plist|int)$/,
+                    include: [
+                        path.resolve(__dirname, 'src/img')
+                    ],
+                    use: [
+                        {
+                            loader: 'url-loader',
+                            options: {
+                                limit: 1,
+                                name: 'img/[name].[ext]'
+                            }
+                        }
+                    ]
+                },
+                {
+                    test: /\.(mp3|mp4)$/,
+                    include: [
+                        path.resolve(__dirname, 'src/media')
+                    ],
+                    use: [
+                        {
+                            loader: 'url-loader',
+                            options: {
+                                limit: 1,
+                                name: 'img/[name].[ext]'
+                            }
+                        }
+                    ]
+                },
+                {
                     test: /\.js$/,
                     include: [
                         path.resolve(__dirname, 'src/js')
                     ],
                     exclude: [
                         path.resolve(__dirname, 'src/js/lib'),
-                        path.resolve(__dirname, 'src/js/util')
+                        path.resolve(__dirname, 'src/js/app/rem.js')
                     ],
                     use: [
                         {
                             loader: 'babel-loader',
                             options: {
-                                cacheDirectory: true
+                                cacheDirectory: true,
+                                presets: ['@babel/preset-env']
                             }
                         },
                         {

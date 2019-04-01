@@ -154,7 +154,7 @@ TD.wxShare = function (data, callback) {
 TD.initWxApi = function (shareData, errback, succback) {
     // 服务器获取验证信息
     TD.ajax({
-        url: 'https://click.treedom.cn/wx/signature',
+        url: '/v2/wx/signature',
         type: 'POST',
         data: {
             appid: shareData.appid,

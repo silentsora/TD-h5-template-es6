@@ -56,35 +56,51 @@ module.exports = function () {
                         }
                     ]
                 },
+                // {
+                //     test: /\.(png|jpg|gif|svg|plist|int)$/,
+                //     include: [
+                //         path.resolve(__dirname, 'src/img')
+                //     ],
+                //     use: [
+                //         {
+                //             loader: 'url-loader',
+                //             options: {
+                //                 limit: 1,
+                //                 name: 'img/[name].[ext]'
+                //             }
+                //         }
+                //     ]
+                // },
+                // {
+                //     test: /\.(mp3|mp4)$/,
+                //     include: [
+                //         path.resolve(__dirname, 'src/media')
+                //     ],
+                //     use: [
+                //         {
+                //             loader: 'url-loader',
+                //             options: {
+                //                 limit: 1,
+                //                 name: 'img/[name].[ext]'
+                //             }
+                //         }
+                //     ]
+                // },
                 {
-                    test: /\.(png|jpg|gif|svg|plist|int)$/,
+                    test: /\.(eot|woff|woff2|ttf|TTF)$/,
                     include: [
-                        path.resolve(__dirname, 'src/img')
-                    ],
-                    use: [
-                        {
-                            loader: 'url-loader',
-                            options: {
-                                limit: 3000,
-                                name: 'img/[name].[hash:8].[ext]'
-                            }
-                        }
-                    ]
-                },
-                {
-                    test: /\.(mp3|mp4)$/,
-                    include: [
-                        path.resolve(__dirname, 'src/media')
+                        path.resolve(__dirname, 'src/font')
                     ],
                     use: [
                         {
                             loader: 'url-loader',
                             options: {
                                 limit: 1,
-                                name: 'img/[name].[hash:8].[ext]'
+                                name: 'img/[name].[ext]'
                             }
                         }
                     ]
+
                 }
             ]
         },

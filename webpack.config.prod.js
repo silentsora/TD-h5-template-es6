@@ -16,6 +16,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+// const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 
 const DefinePlugin = webpack.DefinePlugin;
 
@@ -56,14 +57,14 @@ if (isProduction()) {
             path.resolve(__dirname, 'src/js')
         ],
         exclude: [
-            path.resolve(__dirname, 'src/js/lib'),
-            path.resolve(__dirname, 'src/js/util')
+            path.resolve(__dirname, 'src/js/lib')
         ],
         use: [
             {
                 loader: 'babel-loader',
                 options: {
-                    cacheDirectory: true
+                    cacheDirectory: true,
+                    presets: ['@babel/preset-env']
                 }
             },
             {
@@ -94,7 +95,7 @@ module.exports = function (env) {
                             {
                                 loader: 'css-loader',
                                 options: {
-                                    minimize: !!isProduction()
+                                    // minimize: !!isProduction()
                                 }
                             },
                             {
@@ -108,11 +109,41 @@ module.exports = function (env) {
                         ]
                     })
                 },
+                {
+                    test: /\.(png|jpg|gif|svg|plist|int)$/,
+                    include: [
+                        path.resolve(__dirname, 'src/img')
+                    ],
+                    use: [
+                        {
+                            loader: 'url-loader',
+                            options: {
+                                limit: 3000,
+                                name: 'img/[name].[hash:8].[ext]'
+                            }
+                        }
+                    ]
+                },
+                {
+                    test: /\.(mp3|mp4)$/,
+                    include: [
+                        path.resolve(__dirname, 'src/media')
+                    ],
+                    use: [
+                        {
+                            loader: 'url-loader',
+                            options: {
+                                limit: 1,
+                                name: 'img/[name].[hash:8].[ext]'
+                            }
+                        }
+                    ]
+                },
                 jsRules
             ]
         },
         plugins: [
-            new CleanPlugin('dist'),
+            new CleanPlugin(),
             new DefinePlugin({
                 'process.env': {
                     'NODE_ENV': JSON.stringify(isProduction() ? 'prod' : 'dist'),
@@ -127,6 +158,25 @@ module.exports = function (env) {
                     }
                 }
             })
+            // new ParallelUglifyPlugin({
+                // cacheDir: '.cache/',
+                // include: [
+                //     path.resolve(__dirname, 'src/js')
+                // ],
+                // exclude: [
+                //     path.resolve(__dirname, 'src/js')
+                // ],
+                // uglifyJS: {
+                //     output: {
+                //         beautify: false,
+                //         comments: false
+                //     },
+                //     compress: {
+                //         warnings: false,
+                //         drop_console: !!isProduction()
+                //     }
+                // }
+            // })
         ]
     });
 };
