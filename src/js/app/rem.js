@@ -1,7 +1,7 @@
 (function (doc, win) {
     var width = 750;
     var height = 1600;
-    var rootValue = 100;  // 此处值与postcss配置中'postcss-pxtorem'的值一样
+    var rootValue = 100; // 此处值与postcss配置中'postcss-pxtorem'的值一样
 
     var docEl = doc.documentElement;
     var rszEvt = 'orientationchange' in window ? 'orientationchange' : 'resize';

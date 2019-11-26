@@ -42,7 +42,10 @@ if (isProduction()) {
             },
             {
                 loader: 'babel-loader',
-                options: {}
+                options: {
+                    cacheDirectory: true,
+                    presets: ['@babel/preset-env']
+                }
             },
             {
                 loader: 'eslint-loader',

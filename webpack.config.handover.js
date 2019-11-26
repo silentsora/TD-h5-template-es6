@@ -15,7 +15,7 @@ const CleanPlugin = require('clean-webpack-plugin');
 
 const DefinePlugin = webpack.DefinePlugin;
 
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+// const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 var copyItem = [];
 
@@ -34,7 +34,7 @@ module.exports = function () {
         },
         output: {
             path: path.resolve(__dirname, './dist/ossweb-img'),
-            filename: '[name].js',
+            filename: '[name].[hash:8].js',
             publicPath: config.handover
         },
         module: {
@@ -49,9 +49,7 @@ module.exports = function () {
                         use: [
                             {
                                 loader: 'css-loader',
-                                options: {
-                                    minimize: true  // css压缩，不需要时 false
-                                }
+                                options: {}
                             },
                             {
                                 loader: 'postcss-loader',
@@ -90,11 +88,13 @@ module.exports = function () {
                     use: [
                         {
                             // loader:  WebpackStrip.loader('TD.debug(\\.\\w+)+', 'debug', 'console.log')
-                            loader:  WebpackStrip.loader('TD.debug(\\.\\w+)+', 'debug')
+                            loader: WebpackStrip.loader('TD.debug(\\.\\w+)+', 'debug')
                         },
                         {
                             loader: 'babel-loader',
-                            options: {}
+                            options: {
+                                presets: ['@babel/preset-env']
+                            }
                         },
                         {
                             loader: 'eslint-loader',
@@ -112,7 +112,7 @@ module.exports = function () {
                             loader: 'url-loader',
                             options: {
                                 limit: 3000,
-                                name: '[name].[ext]'
+                                name: '[name].[hash:8].[ext]'
                             }
                         }
                     ]
@@ -127,7 +127,7 @@ module.exports = function () {
                             loader: 'url-loader',
                             options: {
                                 limit: 1,
-                                name: '[name].[ext]'
+                                name: '[name].[hash:8].[ext]'
                             }
                         }
                     ]
@@ -138,8 +138,8 @@ module.exports = function () {
             alias: {}
         },
         plugins: [
-            new CleanPlugin('dist'),
-            new ExtractTextPlugin('[name].css'),
+            new CleanPlugin(),
+            new ExtractTextPlugin('[name].[hash:8].css'),
             new CopyWebpackPlugin(copyItem),
             new DefinePlugin({
                 'process.env': {

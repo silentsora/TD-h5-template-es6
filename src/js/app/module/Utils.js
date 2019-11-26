@@ -105,6 +105,59 @@ Utils.initWebaudio = (url, autoplay) => {
     return request.send();
 };
 
+Utils.initSimpleWebaudio = (url) => {
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    // let source = audioCtx.createBufferSource();
+    var request = new XMLHttpRequest();
+
+    request.open('GET', url, true);
+
+    request.responseType = 'arraybuffer';
+
+    // request.onload = () => {
+    //     var audioData = request.response;
+
+    //     audioCtx.decodeAudioData(audioData, (buffer) => {
+    //         source.buffer = buffer;
+
+    //         source.connect(audioCtx.destination);
+    //         source.loop = true;
+    //     },
+    //     (e) => {
+    //         console.log(e);
+    //     });
+    // };
+
+    // return request.send();
+
+    return new Promise((resolve, reject) => {
+        request.onload = () => {
+            var audioData = request.response;
+            audioCtx.decodeAudioData(audioData, (buffer) => {
+                buffer.start = (isLoop = 0) => {
+                    let source = audioCtx.createBufferSource();
+                    source.buffer = buffer;
+                    source.connect(audioCtx.destination);
+                    if (isLoop === 1) {
+                        source.loop = true;
+                        buffer.source = source;
+                    } else if (isLoop === 2) {
+                        source.disconnect(audioCtx.destination);
+                        // 提前在点击事件静默调用音源，解决ios非交互不能播放音频问题
+                    }
+                    source.start();
+                };
+                resolve(buffer);
+            },
+            (e) => {
+                console.log(e);
+            });
+        };
+        request.send();
+    });
+};
+
 Utils.showSimpleMessage = (text) => {
     let msg = document.querySelector('.simple-msg');
     msg.innerHTML = text;
@@ -174,6 +227,35 @@ Utils.buildCanvas = (imgList) => {
 
         return imgCanvas;
     }, 100);
+};
+
+Utils.lastText = {
+    x: 0, // 上一段文本的x坐标
+    y: 0,
+    width: 0 // 文本宽度
+};
+Utils.newLine = (ctx, text, x, y, fontSize, color) => {
+    ctx.font = `${fontSize} kaiti`;
+    ctx.fillStyle = color;
+    ctx.fillText(text, x, y);
+    Utils.lastText = {
+        x: x,
+        y: y,
+        width: ctx.measureText(text).width
+    };
+};
+
+Utils.followLine = (ctx, text, spacing, fontSize, color) => {
+    let x = Utils.lastText.x + Utils.lastText.width + spacing;
+    let y = Utils.lastText.y;
+    ctx.font = `${fontSize} kaiti`;
+    ctx.fillStyle = color;
+    ctx.fillText(text, x, y);
+    Utils.lastText = {
+        x: x,
+        y: y,
+        width: ctx.measureText(text).width
+    };
 };
 
 export default Utils;

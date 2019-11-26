@@ -38,7 +38,7 @@ export default class Loading {
             if (/permit-scroll/.test(className) === false) {
                 event.preventDefault();
             }
-        }, {passive: false});
+        }, { passive: false });
 
         // 横屏时提示竖屏
         TD.portraitTips(document.querySelector('.portrait-hint'));

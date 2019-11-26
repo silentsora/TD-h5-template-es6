@@ -19,7 +19,8 @@ Config.defShare = {
     // 项目名，数据查询时候用
     proj: 'streetgame',
     // 填写公众号绑定的appid
-    appid: 'wx12380ea254191f1b',
+    appid: 'wx045f59bcba3061c4', // click 所有appid通用
+    // apppid: 'wx875c7888a7aef3f7', // v2，限定appid
     cnzz: '1259179479'
 };
 
@@ -83,4 +84,4 @@ Config.mainImgs = {
     ]
 };
 
-module.exports = Config;
+export default Config;
