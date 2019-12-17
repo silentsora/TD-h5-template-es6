@@ -1,5 +1,5 @@
 {
-    "name": "newyear2019-web-20190109",
+    "name": "silentsora-td-template",
     "version": "1.0.0",
     "scripts": {
         "start": "npm run dev",
@@ -9,7 +9,7 @@
         "handover": "webpack --config webpack.config.handover.js",
         "zip": "webpack --config webpack.config.zip.js"
     },
-    "author": "treedom",
+    "author": "silentsora",
     "devDependencies": {
         "@babel/core": "^7.4.0",
         "@babel/plugin-transform-runtime": "^7.4.0",

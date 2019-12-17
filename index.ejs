@@ -26,7 +26,7 @@
         <% } %>
     <% } else { %>
         <% for (var css in htmlWebpackPlugin.files.css) { %>
-            <% var cssFile = htmlWebpackPlugin.files.css[css].substr(htmlWebpackPlugin.files.publicPath.length); %>
+            <% var cssFile = htmlWebpackPlugin.files.css[css].replace("/css", "/img"); %>
             <link href="<%= cssFile %>" rel="stylesheet">
         <% } %>
     <% } %>
@@ -89,7 +89,7 @@
 
     <!-- 本地zepto -->
     <script src="<%= require('./src/js/lib/zepto.min.1.2.js') %>"></script>
-    
+
     <% if (process.env.NODE_ENV === 'handover') { %>
         <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
             <% var jsFile = htmlWebpackPlugin.files.chunks[chunk].entry; %>
@@ -97,7 +97,7 @@
         <% } %>
     <% } else { %>
         <% for (var chunk in htmlWebpackPlugin.files.chunks) { %>
-            <% var jsFile = htmlWebpackPlugin.files.chunks[chunk].entry.substr(htmlWebpackPlugin.files.publicPath.length); %>
+            <% var jsFile = htmlWebpackPlugin.files.chunks[chunk].entry.replace("/js", "/img"); %>
             <script type="text/javascript" src="<%= jsFile %>"></script>
         <% } %>
     <% } %>
